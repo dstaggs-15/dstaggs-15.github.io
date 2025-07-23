@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects | Daniel Staggs</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container">
+      <h1 class="logo"><a href="index.html">Daniel Staggs</a></h1>
+      <nav class="nav">
+        <a href="projects.html">Projects</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Projects ===== -->
+  <section class="section">
+    <div class="container">
+      <h2 style="text-align:center; margin-bottom:2rem;">Project Portfolio</h2>
+      <div class="cards">
+        <!-- Diet‑in‑LA Calorie Analyzer -->
+        <article class="card">
+          <img src="assets/diet-in-la.png" alt="Diet‑in‑LA Calorie Analyzer screenshot" />
+          <h4>Diet‑in‑LA Calorie Analyzer</h4>
+          <p>Python tool that parses Cronometer exports, detects sustained caloric deficits, and estimates weekly fat‑loss trends. Built with Pandas and Matplotlib; deployed as a CLI app.</p>
+          <a href="#" target="_blank">View Code →</a>
+        </article>
+
+        <!-- Fantasy Football Analyzer -->
+        <article class="card">
+          <img src="assets/ff-analyzer.png" alt="Fantasy Football Analyzer screenshot" />
+          <h4>Fantasy Football Analyzer</h4>
+          <p>Flask web app leveraging ESPN API + Scikit‑learn to rank pickups, suggest trades, and optimize line‑ups. Uses PostgreSQL for caching.</p>
+          <a href="#" target="_blank">View Code →</a>
+        </article>
+
+        <!-- Raspberry Pi Homelab -->
+        <article class="card">
+          <img src="assets/pi-homelab.png" alt="Raspberry Pi Homelab screenshot" />
+          <h4>Raspberry Pi Homelab</h4>
+          <p>Self‑hosted services (Pi‑hole, Nextcloud, Uptime Kuma) behind Nginx reverse proxy with automated Rclone backups to Wasabi S3.</p>
+          <a href="#" target="_blank">View Code →</a>
+        </article>
+
+        <!-- Add new projects below this line -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 Daniel Staggs. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
+
