@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Experience | Daniel Staggs</title>
+  <title>Daniel Staggs | IT Support Specialist & Python Developer</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- ===== Site Header ===== -->
   <header class="site-header">
     <div class="container">
       <h1 class="logo"><a href="index.html">Daniel Staggs</a></h1>
@@ -22,37 +23,102 @@
     </div>
   </header>
 
-  <section class="section">
+  <!-- ===== Hero ===== -->
+  <section class="hero">
     <div class="container">
-      <h2 style="text-align:center; margin-bottom:2rem;">Professional Experience</h2>
-      <ul class="timeline">
-        <li>
-          <strong>IT Technician – Covenant Christian School (2022‑Present)</strong>
-          <span>Manage and upgrade IT infrastructure for 200+ users; troubleshoot PCs, networks, printers, and AV; mentor teachers on Google Workspace.</span>
-        </li>
-        <li>
-          <strong>Robotics Coordinator & Coach – Covenant Christian School (2022‑Present)</strong>
-          <span>Led team to 1st place in BEST Robotics regionals (2024); coach students in programming, mechanical design, and project management.</span>
-        </li>
-        <li>
-          <strong>Elementary Computer Instructor – Covenant Christian School (2023‑Present)</strong>
-          <span>Develop and deliver curriculum for grades 1‑6 covering typing, online safety, logic, and introductory coding.</span>
-        </li>
-        <li>
-          <strong>IT Consultant – Cliff Haven Church (2023, Contract)</strong>
-          <span>Rebuilt and upgraded desktop PCs, migrated data, and repaired the church's livestream & soundboard setup.</span>
-        </li>
-        <li>
-          <strong>IT Consultant – First Presbyterian Church, Tuscumbia (2024, Contract)</strong>
-          <span>Diagnosed hardware failures, replaced components, optimized Windows settings, and modernized sanctuary AV infrastructure.</span>
-        </li>
+      <h2>IT Support Specialist · Robotics Coach · Python Developer</h2>
+      <p>I transform outdated systems into reliable tools, automate workflows with clean Python, and coach students to award-winning robotics performances.</p>
+      <a href="resume.pdf" class="btn">Download Résumé</a>
+    </div>
+  </section>
+
+  <!-- ===== About / Skills ===== -->
+  <section class="section alt">
+    <div class="container" style="max-width:850px;">
+      <h3>Who I Am</h3>
+      <p>Hands-on IT technician with five years’ experience fixing hardware, securing networks, and making tech <em>just work</em>. I’m finishing a Bachelor of Business Administration (Management & CIS) while tackling real-world problems for schools, churches, and small businesses in North Alabama.</p>
+
+      <h4 style="margin-top:2rem;">Core Skills</h4>
+      <ul style="column-count:2; margin-left:1rem;">
+        <li>Windows / macOS / Linux support</li>
+        <li>PC rebuilds & component upgrades</li>
+        <li>Python scripting & automation</li>
+        <li>Network troubleshooting (firewalls, Wi-Fi)</li>
+        <li>Audio-Visual setup & repair</li>
+        <li>Google Workspace administration</li>
       </ul>
     </div>
   </section>
 
+  <!-- ===== Featured Projects ===== -->
+  <section class="section">
+    <div class="container">
+      <h3>Featured Projects</h3>
+      <div class="cards">
+        <article class="card">
+          <img src="assets/diet-in-la.png" alt="Diet/Bulk Calorie Analyzer screenshot" />
+          <h4>Diet/Bulk Calorie Analyzer</h4>
+          <p>CLI tool that parses Cronometer exports, detects sustained deficit or surplus periods, and forecasts weekly body-composition change.</p>
+        </article>
+        <article class="card">
+          <img src="assets/ff-analyzer.png" alt="Fantasy Football Analyzer screenshot" />
+          <h4>Fantasy Football Analyzer</h4>
+          <p>Flask app integrating ESPN API and lightweight ML to rank waivers, propose trades, and optimize line-ups.</p>
+        </article>
+        <article class="card">
+          <img src="assets/pi-homelab.png" alt="Ubuntu Server Homelab screenshot" />
+          <h4>Ubuntu Server Homelab</h4>
+          <p>Headless Ubuntu server running Python bots, local LLMs, and uptime monitoring—securely accessed via Tailscale.</p>
+        </article>
+      </div>
+      <p style="text-align:center; margin-top:2rem;">
+        <a href="projects.html" class="btn">View All Projects</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== Experience Snapshot ===== -->
+  <section class="section alt">
+    <div class="container">
+      <h3>Experience Highlights</h3>
+      <ul class="timeline">
+        <li>
+          <strong>IT Technician – Covenant Christian School (2022-Present)</strong>
+          <span>Maintain 200+ devices; troubleshoot networks, PCs, printers, and AV.</span>
+        </li>
+        <li>
+          <strong>Robotics Coach – Covenant Christian School (2022-Present)</strong>
+          <span>Led students to 1st place in BEST Robotics regionals (2024).</span>
+        </li>
+        <li>
+          <strong>IT Consultant – Cliff Haven Church (2020-2023)</strong>
+          <span>Rebuilt PCs, migrated data, and optimized livestream & soundboard workflow.</span>
+        </li>
+        <li>
+          <strong>IT Consultant – First Presbyterian Church, Tuscumbia (2023-Present)</strong>
+          <span>Diagnose hardware failures, replace components, and modernize sanctuary AV infrastructure.</span>
+        </li>
+      </ul>
+      <p style="text-align:center; margin-top:2rem;">
+        <a href="experience.html" class="btn">Full Experience</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== Education Callout ===== -->
+  <section class="section">
+    <div class="container" style="text-align:center;">
+      <h3>Education & Certification</h3>
+      <p>B.B.A. (Management & CIS) – <em>In Progress</em> · University of North Alabama (Expected Dec 2025)</p>
+      <p>Studying for <strong>CompTIA A+</strong> – Target Q4 2025</p>
+      <a href="education.html" class="btn" style="margin-top:1rem;">See Details</a>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
   <footer class="site-footer">
     <div class="container">
-      <p>© 2025 Daniel Staggs. All rights reserved.</p>
+      <p>© 2025 Daniel Staggs. All rights reserved.</p>
     </div>
   </footer>
 </body>
