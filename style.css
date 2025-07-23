@@ -61,14 +61,30 @@ a:hover {
   color: var(--clr-dark);
 }
 
+/* Desktop nav layout */
+.nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
 .nav a {
-  margin-left: 1.5rem;
   font-weight: 600;
   color: var(--clr-dark);
 }
 
 .nav a:hover {
   color: var(--clr-primary);
+}
+
+/* Mobile hamburger toggle (hidden on desktop) */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--clr-dark);
 }
 
 /* ===== Hero Section ===== */
@@ -197,12 +213,29 @@ a:hover {
 
 /* ===== Responsive Tweaks ===== */
 @media (max-width: 600px) {
+  /* hide desktop nav, show hamburger */
   .nav {
-    display: none; /* simple mobile-first approach; replace with burger later */
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--clr-surface);
+    position: absolute;
+    right: 1rem;
+    top: 4rem;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .nav.open {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: block;
   }
 
   .hero h2 {
     font-size: 1.5rem;
   }
 }
-
