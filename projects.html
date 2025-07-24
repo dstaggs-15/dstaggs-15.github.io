@@ -34,30 +34,42 @@
       <h2 style="text-align:center; margin-bottom:2rem;">Project Portfolio</h2>
       <div class="cards">
         <!-- Diet‑in‑LA Calorie Analyzer -->
-        <article class="card">
-        <img src="assets/diet.png" alt="Diet/Bulk Calorie Analyzer screenshot">
-          <h4>Cut/Bulk Calorie Analyzer</h4>
-          <p>Python tool that parses Cronometer exports, detects sustained caloric deficits, and estimates weekly fat‑loss trends. Built with Pandas and Matplotlib; deployed as a CLI app.</p>
-          <a href="diet-analyzer.html">View Code →</a>
-
-        </article>
+    <article class="card">
+  <img src="assets/diet.png" alt="Diet/Bulk Calorie Analyzer screenshot">
+  <h4>Diet/Bulk Calorie Analyzer</h4>
+  <p>
+    • <strong>Problem solved:</strong> Forecast how much weight you <em>should</em> gain or lose during a bulk /cut cycle and compare it to what actually happened.<br>
+    • <strong>Data sources:</strong> Apple Watch (Health CSV), Cronometer nutrition logs, Hevy workout exports.<br>
+    • <strong>How it works:</strong> Pandas cleans & joins the CSVs → daily energy balance model → Matplotlib charts predicted vs actual weight-curve with error bands.<br>
+    • <strong>Outcome:</strong> Gives athletes an instant sanity-check on their diet without manual spreadsheets.
+  </p>
+  <a href="diet-analyzer.html">Full Source →</a>
+</article>
 
         <!-- Fantasy Football Analyzer -->
-        <article class="card">
-          <img src="assets/espn.png" alt="Fantasy Football Analyzer screenshot">
-          <h4>Fantasy Football Analyzer</h4>
-          <p>Flask web app leveraging ESPN API + Scikit‑learn to rank pickups, suggest trades, and optimize line‑ups. Uses PostgreSQL for caching.</p>
-          <a href="#" target="_blank">View Code →</a>
-        </article>
+    <article class="card">
+  <img src="assets/espn.png" alt="Fantasy Football Analyzer screenshot">
+  <h4>Fantasy Football Analyzer (v1)</h4>
+  <p>
+    • <strong>Goal:</strong> Win waiver wire and trades by turning raw ESPN data into actionable scores.<br>
+    • <strong>Stack:</strong> Python&nbsp;/ Flask UI, ESPN private API, simple linear-reg model (scikit-learn) for rest-of-season value.<br>
+    • <strong>Features:</strong> Waiver priority list, trade-value calculator, weekly start/sit optimiser.<br>
+    • <em>v2 roadmap:</em> Live API polling, LLM-generated matchup notes, and containerised deployment.
+  </p>
+  <!-- placeholder until v2 code is published -->
+</article>
 
         <!-- Raspberry Pi Homelab -->
-        <article class="card">
-         <img src="assets/jelly.png" alt="Ubuntu Server Homelab screenshot">
-            <h4>Ubuntu Server Homelab</h4>
-          <p>Headless Ubuntu server running Python bots, local LLMs, and uptime monitoring—securely accessed via Tailscale.</p>
-          <a href="#" target="_blank">View Code →</a>
-        </article>
-
+  <article class="card">
+  <img src="assets/jelly.png" alt="Ubuntu Server Homelab screenshot">
+  <h4>Ubuntu Server Homelab</h4>
+  <p>
+    • <strong>Why:</strong> Cheap on-prem sandbox for automation and privacy-focused services.<br>
+    • <strong>Infra:</strong> Ubuntu 22.04 LTS on mini-PC, accessed via SSH and Tailscale VPN; Docker + systemd for services.<br>
+    • <strong>Workloads:</strong> Python scrapers, static-site hosting, uptime-kuma monitoring, and a locally-served 8-bit LLM during R&D.<br>
+    • <strong>Ops:</strong> Automated Off-site backups (rclone → Wasabi), Nginx reverse-proxy, cron-based log rotation.
+  </p>
+</article>
         <!-- Add new projects below this line -->
       </div>
     </div>
