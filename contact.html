@@ -35,16 +35,54 @@
 
 
   <!-- ===== Contact Section ===== -->
-  <section class="section" style="text-align:center;">
-    <div class="container" style="max-width:600px;">
-      <h2 style="margin-bottom:1.5rem;">Let’s Connect</h2>
-      <p><strong>Phone:</strong> <a href="tel:2568103905">(256) 810‑3905</a></p>
-      <p><strong>Email:</strong> <a href="mailto:daniel.staggs0215@gmail.com">daniel.staggs0215@gmail.com</a></p>
-      <p><strong>School Email:</strong> <a href="mailto:dstaggs1@una.edu">dstaggs1@una.edu</a></p>
-      <p><strong>Work Email:</strong> <a href="mailto:dstaggs@ccseagles.com">dstaggs@ccseagles.com</a></p>
-      <p style="margin-top:1rem;"><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/daniel-staggs-098333232" target="_blank">linkedin.com/in/daniel‑staggs‑098333232</a></p>
-    </div>
-  </section>
+<section class="section" style="text-align:center;">
+  <div class="container" style="max-width:600px;">
+    <h2 style="margin-bottom:1.5rem;">Let’s Connect</h2>
+
+    <!-- Contact Form -->
+    <form action="https://formspree.io/f/mnnzdjvg" method="POST" class="contact-form">
+      <input   type="text"   name="name"      placeholder="Your name"   required>
+      <input   type="email"  name="_replyto"  placeholder="Your email"  required>
+      <textarea name="message" rows="5"       placeholder="How can I help?" required></textarea>
+      <button  type="submit" class="btn">Send Message</button>
+    </form>
+
+    <p id="form-status" style="margin-top:1rem;"></p>
+
+    <!-- Direct Contact Fallback -->
+    <hr style="margin:2.5rem 0;">
+    <p><strong>Phone:</strong> <a href="tel:2568103905">(256) 810-3905</a></p>
+    <p><strong>Email:</strong> <a href="mailto:daniel.staggs0215@gmail.com">daniel.staggs0215@gmail.com</a></p>
+    <p><strong>School:</strong> <a href="mailto:dstaggs1@una.edu">dstaggs1@una.edu</a></p>
+    <p><strong>Work:</strong> <a href="mailto:dstaggs@ccseagles.com">dstaggs@ccseagles.com</a></p>
+    <p style="margin-top:1rem;">
+      <strong>LinkedIn:</strong>
+      <a href="https://www.linkedin.com/in/daniel-staggs-098333232" target="_blank">
+        linkedin.com/in/daniel-staggs-098333232
+      </a>
+    </p>
+  </div>
+</section>
+
+<!-- success / error feedback -->
+<script>
+  const form   = document.querySelector('.contact-form');
+  const status = document.getElementById('form-status');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    fetch(form.action, {
+      method: 'POST',
+      body:   new FormData(form),
+      headers:{ 'Accept':'application/json' }
+    })
+    .then(r => r.ok
+      ? (status.textContent = 'Thanks! I’ll reply soon.', form.reset())
+      : r.json().then(() => Promise.reject()))
+    .catch(()  => status.textContent = 'Oops – message failed. Email me instead.');
+  });
+</script>
+
 
   <!-- ===== Footer ===== -->
   <footer class="site-footer">
