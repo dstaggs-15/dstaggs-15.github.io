@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diet/Bulk Calorie Analyzer - Source Code</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- highlight.js for pretty code colours -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diet/Bulk Calorie Analyzer | Deep Dive</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="assets/DS.png" />
 </head>
 <body>
-  <!-- Re-use the same header -->
+  <!-- ===== Header ===== -->
   <header class="site-header">
     <div class="container">
-      <h1 class="logo"><a href="index.html">Daniel Staggs</a></h1>
+      <h1 class="logo">
+        <a href="index.html">
+          <img class="logo-img" src="assets/DS.png" alt="DS logo" />
+          Daniel Staggs
+        </a>
+      </h1>
       <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
       <nav class="nav">
         <a href="projects.html">Projects</a>
@@ -24,42 +27,111 @@
     </div>
   </header>
 
-  <section class="section">
-    <div class="container" style="max-width:900px;">
-      <h2 style="text-align:center;margin-bottom:1.5rem;">
-        Diet/Bulk Calorie Analyzer – <span style="font-size:0.7em;">health_bot.py</span>
-      </h2>
-
-      <!-- Raw code pulled straight from the Python file -->
-      <pre><code id="py-src" class="language-python"></code></pre>
-
-      <p style="text-align:center;margin-top:1rem;">
-        <a class="btn" href="assets/code/health_bot.py" download>Download health_bot.py</a>
-      </p>
+  <!-- ===== Hero ===== -->
+  <section class="hero" style="padding:3.5rem 0;">
+    <div class="container" style="max-width:780px;">
+      <h2>Diet / Bulk Calorie Analyzer – Full Breakdown</h2>
+      <p>This Python application merges nutrition, training, and wearable data to forecast weight‑change trends and validate whether a diet or bulk is actually on track.</p>
+      <a class="btn" href="assets/code/health_bot.py" download>Download health_bot.py</a>
     </div>
   </section>
 
+  <!-- ===== Problem & Solution ===== -->
+  <section class="section">
+    <div class="container" style="max-width:900px;">
+      <h3>1. Problem&nbsp;→ Solution</h3>
+      <p><strong>Pain point:</strong> lifters and dieters track calories but rarely validate predictions against the scale. Spreadsheet workflows are manual, error‑prone, and skip workout expenditure.</p>
+      <p><strong>Solution:</strong> a CLI tool that automatically ingests three CSV streams, models daily energy balance, graphs predicted vs actual weight, and flags when the deviation exceeds 3 %.</p>
+    </div>
+  </section>
+
+  <!-- ===== Data Pipeline ===== -->
+  <section class="section alt">
+    <div class="container" style="max-width:900px;">
+      <h3>2. Data Pipeline</h3>
+      <ul class="timeline" style="margin-top:1rem;">
+        <li><strong>Apple Health</strong><span> → weight & step count (exported via <em>Health‑Auto-Export</em>)</span></li>
+        <li><strong>Cronometer</strong><span> → daily calories, macros, micronutrients</span></li>
+        <li><strong>Hevy App</strong><span> → workout volume, sets, RPE</span></li>
+      </ul>
+      <p style="margin-top:1rem;">All three CSVs are normalised with <code>Pandas</code>, merged on date, then passed to a calorie‑balance model that adds <em>activity expenditure</em> from workouts and steps.</p>
+      <img src="assets/diet_pipeline.png" alt="Data flow diagram" style="width:100%; border-radius:var(--radius); margin-top:1.5rem;" />
+    </div>
+  </section>
+
+  <!-- ===== Core Logic ===== -->
+  <section class="section">
+    <div class="container" style="max-width:900px;">
+      <h3>3. Core Logic (40 lines)</h3>
+      <pre><code class="language-python"># simplified excerpt
+energy_in  = crono_df['calories']
+energy_out = 0.9 * hevy_df['kcal_est'] + 0.04 * steps_df['steps']
+
+def predict_weight(start_wt, kcal_deficit):
+    return start_wt + kcal_deficit / 7700  # kcal per kg fat
+
+daily_deficit = energy_in - energy_out - tdee
+weight_pred   = predict_weight(start_weight, daily_deficit.cumsum())
+</code></pre>
+      <p>Full annotated code lives in <a href="assets/code/health_bot.py" target="_blank">health_bot.py</a>.</p>
+    </div>
+  </section>
+
+  <!-- ===== Visual Output ===== -->
+  <section class="section alt">
+    <div class="container" style="max-width:900px;">
+      <h3>4. Visual Output</h3>
+      <p>The script exports a PNG plotted with <code>Matplotlib</code>. Blue line = scale weight, dotted line = model prediction; grey band = ±3 % tolerance.</p>
+      <img src="assets/diet_plot_sample.png" alt="Weight prediction chart" style="width:100%; border-radius:var(--radius); margin-top:1rem;" />
+    </div>
+  </section>
+
+  <!-- ===== Challenges & Lessons ===== -->
+  <section class="section">
+    <div class="container" style="max-width:900px;">
+      <h3>5. Challenges & Lessons</h3>
+      <ul>
+        <li><strong>Timestamp mismatches</strong> – Apple Health exports UTC; Cronometer is local. Fixed by forcing all to <code>America/Chicago</code> via <code>pytz</code>.</li>
+        <li><strong>Over‑reporting steps</strong> – double‑counts from phone + watch. Solved with a duplicate‑filter that keeps the higher fidelity stream.</li>
+        <li><strong>Diet adherence check</strong> – added a red flag when real weight diverges >3 % for ≥7 days.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Future Work ===== -->
+  <section class="section alt">
+    <div class="container" style="max-width:900px;">
+      <h3>6. Future Improvements</h3>
+      <ul>
+        <li>Move to a Streamlit dashboard for real‑time interactive charts.</li>
+        <li>Add DEXA‑based body‑fat adjustment when available.</li>
+        <li>Integrate Garmin or Whoop HRV for recovery weighting.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Back to Projects button ===== -->
+  <section class="section" style="text-align:center;">
+    <a href="projects.html" class="btn">← Back to Projects</a>
+  </section>
+
+  <!-- ===== Footer ===== -->
   <footer class="site-footer">
     <div class="container">
-      <p>© 2025 Daniel Staggs. All rights reserved.</p>
+      <p>© 2025 Daniel Staggs. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- highlight.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <!-- mobile nav js -->
   <script>
-    // fetch the raw file and inject into <code> tag
-    fetch('assets/code/health_bot.py')
-      .then(r => r.text())
-      .then(txt => {
-        document.getElementById('py-src').textContent = txt;
-        hljs.highlightAll();
-      });
-
-    // mobile-nav toggle
     const navToggle = document.querySelector('.nav-toggle');
-    const nav       = document.querySelector('.nav');
+    const nav = document.querySelector('.nav');
     navToggle.addEventListener('click', () => nav.classList.toggle('open'));
   </script>
+
+  <!-- Highlight.js for code block -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
 </body>
 </html>
