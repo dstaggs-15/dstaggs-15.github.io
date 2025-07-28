@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gas Tracker PWA | Deep Dive</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="assets/DS.png" />
+</head>
+<body>
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container">
+      <h1 class="logo">
+        <a href="index.html">
+          <img class="logo-img" src="assets/DS.png" alt="DS logo" />
+          Daniel Staggs
+        </a>
+      </h1>
+      <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav">
+        <a href="projects.html">Projects</a>
+        <a href="experience.html">Experience</a>
+        <a href="education.html">Education</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" style="padding:3.5rem 0;">
+    <div class="container" style="max-width:780px;">
+      <h2>Gas Tracker PWA – Full Breakdown</h2>
+      <p>Offline‑first web app that logs fuel fill‑ups, stores data in <code>localStorage</code>, computes MPG trends, and works even when you&rsquo;re out of service.</p>
+      <a class="btn" href="https://dstaggs-15.github.io/gastracker/index.html" target="_blank">Live Demo</a>
+    </div>
+  </section>
+
+  <!-- ===== Problem & Solution ===== -->
+  <section class="section">
+    <div class="container" style="max-width:900px;">
+      <h3>1. Problem&nbsp;→ Solution</h3>
+      <p><strong>Pain point:</strong> Paper receipts and random notes apps make it hard to track real fuel efficiency and cost over time—especially in areas with poor cell coverage.</p>
+      <p><strong>Solution:</strong> A Progressive Web App that runs 100 % on the client, logs gallons, miles, price, and instantly shows MPG & cost‑per‑mile—no account, no connectivity required.</p>
+    </div>
+  </section>
+
+  <!-- ===== Architecture ===== -->
+  <section class="section alt">
+    <div class="container" style="max-width:900px;">
+      <h3>2. Architecture</h3>
+      <ul class="timeline" style="margin-top:1rem;">
+        <li><strong>LocalStorage</strong><span> → persistent JSON array (<em>fuelLog</em>) keyed by date</span></li>
+        <li><strong>Service Worker</strong><span> → caches HTML/CSS/JS for offline use</span></li>
+        <li><strong>ES6 Modules</strong><span> → <code>ui.js</code>, <code>storage.js</code>, <code>stats.js</code></span></li>
+      </ul>
+      <img src="assets/gas_pipeline.png" alt="Gas Tracker architecture diagram" style="width:100%; border-radius:var(--radius); margin-top:1.5rem;" />
+    </div>
+  </section>
+
+  <!-- ===== Core Logic ===== -->
+  <section class="section">
+    <div class="container" style="max-width:900px;">
+      <h3>3. Core Logic (excerpt)</h3>
+      <pre><code class="language-javascript">// src/stats.js
+export function calcStats(log) {
+  if (log.length < 2) return {};
+  let totalMiles = 0, totalGallons = 0, totalCost = 0;
+  for (let i = 1; i < log.length; i++) {
+    const miles = log[i].odometer - log[i-1].odometer;
+    totalMiles   += miles;
+    totalGallons += log[i].gallons;
+    totalCost    += log[i].gallons * log[i].price;
+  }
+  return {
+    mpg:  (totalMiles / totalGallons).toFixed(2),
+    cpm:  (totalCost / totalMiles).toFixed(3),
+    fillups: log.length - 1
+  };
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- ===== Screenshots ===== -->
+  <section class="section alt">
+    <div class="container" style="max-width:900px;">
+      <h3>4. Screenshots</h3>
+      <img src="assets/gas_tracker.png" alt="Fuel log screenshot" style="width:100%; border-radius:var(--radius); margin-bottom:1rem;" />
+      <img src="assets/gas_chart_sample.png" alt="MPG chart screenshot" style="width:100%; border-radius:var(--radius);" />
+    </div>
+  </section>
+
+  <!-- ===== Challenges & Lessons ===== -->
+  <section class="section">
+    <div class="container" style="max-width:900px;">
+      <h3>5. Challenges & Lessons</h3>
+      <ul>
+        <li><strong>Data integrity</strong> – added validation to ensure odometer readings never decrease.</li>
+        <li><strong>Offline‑first gotchas</strong> – service‑worker cache busted on every push via <code>cacheName = VERSION</code>.</li>
+        <li><strong>Expense export</strong> – one‑click CSV export for accountant-friendly reports.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Future Work ===== -->
+  <section class="section alt">
+    <div class="container" style="max-width:900px;">
+      <h3>6. Future Improvements</h3>
+      <ul>
+        <li>IndexedDB sync to multiple devices.</li>
+        <li>Dark‑mode charts with Chart.js v4.</li>
+        <li>VIN lookup to autofill tank size.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Back to Projects button ===== -->
+  <section class="section" style="text-align:center;">
+    <a href="projects.html" class="btn">← Back to Projects</a>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 Daniel Staggs. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- mobile nav js -->
+  <script>
+    const navToggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('.nav');
+    navToggle.addEventListener('click', () => nav.classList.toggle('open'));
+  </script>
+
+  <!-- Highlight.js for code block -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</body>
+</html>
