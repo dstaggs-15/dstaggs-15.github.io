@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gas Tracker PWA | Deep Dive</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/png" href="assets/DS.png" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="assets/DS.png">
 </head>
 <body>
   <!-- ===== Header ===== -->
@@ -13,7 +13,7 @@
     <div class="container">
       <h1 class="logo">
         <a href="index.html">
-          <img class="logo-img" src="assets/DS.png" alt="DS logo" />
+          <img class="logo-img" src="assets/DS.png" alt="DS logo">
           Daniel Staggs
         </a>
       </h1>
@@ -31,23 +31,17 @@
   <section class="hero" style="padding:3.5rem 0;">
     <div class="container" style="max-width:780px;">
       <h2>Gas Tracker PWA – Full Breakdown</h2>
-      <p>Offline‑first web app that logs fuel fill‑ups, stores data in <code>localStorage</code>, computes MPG trends, and works even when you&rsquo;re out of service.</p>
-      <a class="btn" href="https://dstaggs-15.github.io/gastracker/index.html" target="_blank">Live Demo</a>
+      <p>Offline-first web app that logs fuel fill-ups, stores data in <code>localStorage</code>, and computes MPG &amp; cost-per-mile—no connectivity required.</p>
+      <a class="btn" href="https://dstaggs-15.github.io/gastracker/index.html" target="_blank">Live Demo</a>
     </div>
   </section>
 
   <!-- ===== Problem & Solution ===== -->
   <section class="section">
     <div class="container" style="max-width:900px;">
-      <h3>1. Problem&nbsp;→ Solution</h3>
+      <h3>1. Problem&nbsp;→ Solution</h3>
       <p><strong>Pain point:</strong> Paper receipts and random notes apps make it hard to track real fuel efficiency and cost over time—especially in areas with poor cell coverage.</p>
-      <p><strong>Solution:</strong> A Progressive Web App that runs 100 % on the client, logs gallons, miles, price, and instantly shows MPG & cost‑per‑mile—no account, no connectivity required.</p>
-      <!-- Live-demo button -->
-<p style="text-align:center; margin-top:1.5rem;">
-  <a href="https://dstaggs-15.github.io/gastracker/index.html"
-     target="_blank"
-     class="btn">Live&nbsp;Demo</a>
-</p>
+      <p><strong>Solution:</strong> A Progressive Web App that runs 100 % on the client, logs gallons, miles, price, and instantly shows MPG &amp; cost-per-mile—no account needed.</p>
     </div>
   </section>
 
@@ -60,7 +54,6 @@
         <li><strong>Service Worker</strong><span> → caches HTML/CSS/JS for offline use</span></li>
         <li><strong>ES6 Modules</strong><span> → <code>ui.js</code>, <code>storage.js</code>, <code>stats.js</code></span></li>
       </ul>
-      <img src="assets/gas_pipeline.png" alt="Gas Tracker architecture diagram" style="width:100%; border-radius:var(--radius); margin-top:1.5rem;" />
     </div>
   </section>
 
@@ -87,40 +80,31 @@ export function calcStats(log) {
     </div>
   </section>
 
-  <!-- ===== Screenshots ===== -->
+  <!-- ===== Challenges & Lessons ===== -->
   <section class="section alt">
     <div class="container" style="max-width:900px;">
-      <h3>4. Screenshots</h3>
-      <img src="assets/gas_tracker.png" alt="Fuel log screenshot" style="width:100%; border-radius:var(--radius); margin-bottom:1rem;" />
-      <img src="assets/gas_chart_sample.png" alt="MPG chart screenshot" style="width:100%; border-radius:var(--radius);" />
-    </div>
-  </section>
-
-  <!-- ===== Challenges & Lessons ===== -->
-  <section class="section">
-    <div class="container" style="max-width:900px;">
-      <h3>5. Challenges & Lessons</h3>
+      <h3>4. Challenges & Lessons</h3>
       <ul>
-        <li><strong>Data integrity</strong> – added validation to ensure odometer readings never decrease.</li>
-        <li><strong>Offline‑first gotchas</strong> – service‑worker cache busted on every push via <code>cacheName = VERSION</code>.</li>
-        <li><strong>Expense export</strong> – one‑click CSV export for accountant-friendly reports.</li>
+        <li><strong>Data integrity</strong> – validation prevents odometer readings from decreasing.</li>
+        <li><strong>Offline-first cache busting</strong> – service-worker cache versioned via <code>cacheName = VERSION</code>.</li>
+        <li><strong>Expense export</strong> – one-click CSV for accountant-friendly reports.</li>
       </ul>
     </div>
   </section>
 
   <!-- ===== Future Work ===== -->
-  <section class="section alt">
+  <section class="section">
     <div class="container" style="max-width:900px;">
-      <h3>6. Future Improvements</h3>
+      <h3>5. Future Improvements</h3>
       <ul>
-        <li>IndexedDB sync to multiple devices.</li>
-        <li>Dark‑mode charts with Chart.js v4.</li>
+        <li>IndexedDB sync across devices.</li>
+        <li>Dark-mode charts with Chart.js v4.</li>
         <li>VIN lookup to autofill tank size.</li>
       </ul>
     </div>
   </section>
 
-  <!-- ===== Back to Projects button ===== -->
+  <!-- ===== Back to Projects ===== -->
   <section class="section" style="text-align:center;">
     <a href="projects.html" class="btn">← Back to Projects</a>
   </section>
@@ -128,18 +112,18 @@ export function calcStats(log) {
   <!-- ===== Footer ===== -->
   <footer class="site-footer">
     <div class="container">
-      <p>© 2025 Daniel Staggs. All rights reserved.</p>
+      <p>© 2025 Daniel Staggs. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- mobile nav js -->
+  <!-- Mobile nav JS -->
   <script>
     const navToggle = document.querySelector('.nav-toggle');
     const nav = document.querySelector('.nav');
     navToggle.addEventListener('click', () => nav.classList.toggle('open'));
   </script>
 
-  <!-- Highlight.js for code block -->
+  <!-- Highlight.js -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script>hljs.highlightAll();</script>
