@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Beach Trip Expense Tracker</title>
+<style>
+    :root { font-family: Arial, sans-serif; }
+    body { margin: 0; padding: 2rem; background:#f7f9fb; color:#222; }
+    h1 { margin-top: 0; }
+    .card { background:#fff; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,.1); padding:1.5rem; max-width:600px; margin:auto; }
+    label { display:block; margin:.5rem 0 .25rem; font-weight:600; }
+    input[type="text"], input[type="number"] { width:100%; padding:.5rem; border:1px solid #ccc; border-radius:4px; }
+    button { cursor:pointer; padding:.5rem 1rem; border:none; border-radius:4px; font-weight:600; }
+    button.primary { background:#0077ff; color:#fff; }
+    button.danger  { background:#ff4d4f; color:#fff; }
+    table { width:100%; border-collapse:collapse; margin-top:1rem; }
+    th, td { padding:.5rem; text-align:left; border-bottom:1px solid #eee; }
+    td.amount { text-align:right; }
+    #summary { margin-top:1rem; font-size:1.1rem; }
+</style>
+</head>
+<body>
+<div class="card">
+    <h1>Beach Trip Expense Tracker</h1>
+
+    <!-- Budget -->
+    <label for="budgetInput">Trip Budget ($)</label>
+    <input type="number" id="budgetInput" placeholder="Enter budget" min="0" step="0.01">
+    <button id="setBudgetBtn" class="primary">Save Budget</button>
+
+    <hr>
+
+    <!-- New expense -->
+    <label for="descInput">What did you buy?</label>
+    <input type="text" id="descInput" placeholder="e.g., Sunscreen">
+    <label for="amountInput">Cost ($)</label>
+    <input type="number" id="amountInput" placeholder="0.00" min="0" step="0.01">
+    <button id="addBtn" class="primary" style="margin-top:.75rem">Add Expense</button>
+
+    <!-- List -->
+    <table id="expenseTable" hidden>
+        <thead><tr><th>Item</th><th class="amount">Amount ($)</th><th></th></tr></thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Summary -->
+    <div id="summary"></div>
+
+    <button id="clearBtn" class="danger" style="margin-top:1rem">Clear All</button>
+</div>
+
+<script>
+(function(){
+    const LS_KEY_EXP  = 'beachExpenses';
+    const LS_KEY_BUD  = 'beachBudget';
+
+    // Elements
+    const budgetInput = document.getElementById('budgetInput');
+    const setBudgetBtn= document.getElementById('setBudgetBtn');
+    const descInput   = document.getElementById('descInput');
+    const amountInput = document.getElementById('amountInput');
+    const addBtn      = document.getElementById('addBtn');
+    const table       = document.getElementById('expenseTable');
+    const tbody       = table.querySelector('tbody');
+    const summary     = document.getElementById('summary');
+    const clearBtn    = document.getElementById('clearBtn');
+
+    // --- helpers ---
+    const getExpenses = () => JSON.parse(localStorage.getItem(LS_KEY_EXP) || '[]');
+    const saveExpenses= arr => localStorage.setItem(LS_KEY_EXP, JSON.stringify(arr));
+    const getBudget   = () => parseFloat(localStorage.getItem(LS_KEY_BUD) || 0);
+    const setBudget   = val => localStorage.setItem(LS_KEY_BUD, val.toFixed(2));
+
+    // --- render ---
+    function render() {
+        const expenses = getExpenses();
+        const budget   = getBudget();
+        tbody.innerHTML = '';
+        let total = 0;
+
+        expenses.forEach((exp, idx)=> {
+            total += exp.amount;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${exp.desc}</td>
+                <td class="amount">${exp.amount.toFixed(2)}</td>
+                <td><button data-idx="${idx}" class="danger" style="padding:.2rem .5rem;">×</button></td>`;
+            tbody.appendChild(tr);
+        });
+
+        table.hidden = expenses.length === 0;
+        const remaining = budget - total;
+        summary.innerHTML =
+            `<strong>Total Spent:</strong> $${total.toFixed(2)}  
+             | <strong>Budget:</strong> $${budget.toFixed(2)}  
+             | <strong>${remaining >= 0 ? 'Under' : 'Over'} Budget:</strong> $${Math.abs(remaining).toFixed(2)}`;
+
+        // pre-fill budget field
+        budgetInput.value = (budget || '').toString();
+    }
+
+    // --- events ---
+    setBudgetBtn.onclick = () => {
+        const val = parseFloat(budgetInput.value);
+        if (isNaN(val) || val < 0) return alert('Enter valid budget');
+        setBudget(val); render();
+    };
+
+    addBtn.onclick = () => {
+        const desc = descInput.value.trim();
+        const amt  = parseFloat(amountInput.value);
+        if (!desc) return alert('Enter what you bought');
+        if (isNaN(amt) || amt <= 0) return alert('Enter valid amount');
+        const expenses = getExpenses();
+        expenses.push({ desc, amount: amt });
+        saveExpenses(expenses);
+        descInput.value = amountInput.value = '';
+        descInput.focus();
+        render();
+    };
+
+    tbody.addEventListener('click', e=>{
+        if (e.target.tagName === 'BUTTON') {
+            const idx = +e.target.dataset.idx;
+            const expenses = getExpenses();
+            expenses.splice(idx,1);
+            saveExpenses(expenses);
+            render();
+        }
+    });
+
+    clearBtn.onclick = () => {
+        if (confirm('Delete ALL expenses and reset budget?')) {
+            localStorage.removeItem(LS_KEY_EXP);
+            localStorage.removeItem(LS_KEY_BUD);
+            render();
+        }
+    };
+
+    // initial load
+    render();
+})();
+</script>
+</body>
+</html>
