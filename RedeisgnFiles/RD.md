@@ -1,8 +1,7 @@
 ================================================================
-DANIEL STAGGS — PORTFOLIO SITE PLAN
-Written by Claude | May 2026
+DANIEL STAGGS — PORTFOLIO SITE PLAN | May 2026
 ================================================================
-This document explains what should be on your portfolio site,
+This document explains what should be on the portfolio site,
 why each piece matters, and how to think about it as you build
 and update it over time. Read this before making changes.
 ================================================================
